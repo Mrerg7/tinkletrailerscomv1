@@ -47,7 +47,12 @@ const structuredData = {
       name: 'TinkleTrailers.com Premium Domain Name',
       description:
         'The definitive premium domain for mobile trailer solutions, portable restroom trailers, luxury mobile units, and event trailer businesses. Available for acquisition.',
-      image: OG_IMAGE,
+      image: {
+        '@type': 'ImageObject',
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+      },
       url: SITE.url,
       category: 'Premium Domain Name',
       brand: {
