@@ -381,11 +381,18 @@ html:not(.light) .when-light { display: none; }
 .mock p { color: var(--muted); font-size: 0.98rem; }
 .mock-note { margin-top: 0.85rem; font-size: 0.8rem; color: var(--muted); }
 
-.trailer {
+.logo-plate {
+  margin: 0.85rem 0 0.9rem;
+  background: #f6f3ee;
+  border-radius: 0.85rem;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.logo-plate img {
+  display: block;
   width: 100%;
   height: auto;
-  margin: 0.85rem 0;
-  color: var(--fg);
 }
 
 .trust {

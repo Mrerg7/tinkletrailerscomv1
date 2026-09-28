@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-28 — logo
+
+- Replaced the line-drawn trailer in the brand preview with the Tinkle Trailers.com pencil mark (`public/tinkle-mark.jpg`).
+
+
+
 ## 2026-09-28
 
 Optimization pass for the TinkleTrailers.com domain listing. Direct-from-owner sale at $95,000. No third-party fonts or icon CDNs.
