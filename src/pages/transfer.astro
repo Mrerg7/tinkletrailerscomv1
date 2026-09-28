@@ -1,0 +1,98 @@
+---
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
+import { MAIL, SITE } from '../config/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Escrow Domain Transfer | TinkleTrailers.com | Tinkle Trailers';
+const description =
+  'Buy TinkleTrailers.com through escrow. Price agreement, payment to escrow, registrar push, then funds release. Typical close is 3–10 business days.';
+const url = `${SITE.url}/transfer/`;
+
+const steps = [
+  {
+    name: 'Agree on the price',
+    text: 'Confirm the $95,000 ask or send a written offer with your intended use. No payment happens in this step.',
+  },
+  {
+    name: 'Open licensed escrow',
+    text: 'Use Escrow.com, Dan.com, or another licensed escrow both sides accept. The buyer opens the transaction and names the domain.',
+  },
+  {
+    name: 'Buyer pays escrow',
+    text: 'Funds go to the escrow company, not to a personal account and not by gift card, crypto to a stranger, or a surprise wire change.',
+  },
+  {
+    name: 'Seller starts the transfer',
+    text: 'The domain is unlocked at the registrar and pushed or auth-coded to the buyer’s registrar account.',
+  },
+  {
+    name: 'Buyer confirms control',
+    text: 'You confirm the name is in your account before anyone tells escrow to release funds.',
+  },
+  {
+    name: 'Escrow pays the seller',
+    text: 'Escrow releases the price after confirmation. Most of this finishes in 3–10 business days once both sides are responsive.',
+  },
+];
+
+const extraGraph = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Transfer', item: url },
+    ],
+  },
+  {
+    '@type': 'HowTo',
+    name: 'How to buy TinkleTrailers.com with escrow',
+    description,
+    totalTime: 'P10D',
+    step: steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+    })),
+  },
+];
+---
+
+<BaseLayout title={title} description={description} extraGraph={extraGraph}>
+  <Nav />
+  <Breadcrumb items={[{ name: 'Transfer', href: '/transfer/' }]} />
+  <main id="main" class="wrap page-hero">
+    <p class="kicker">Closing</p>
+    <h1>How the domain transfer works.</h1>
+    <article class="prose" style="padding: 1.4rem 0 3rem;">
+      <p>
+        TinkleTrailers.com closes like any other aftermarket domain. You do not mail a check to a listing address, and you do not pay the seller before the name is in your registrar.
+      </p>
+      <h2>Steps</h2>
+      <ol>
+        {steps.map((step) => (
+          <li>
+            <strong>{step.name}.</strong> {step.text}
+          </li>
+        ))}
+      </ol>
+      <h2>What you need ready</h2>
+      <ul>
+        <li>An account at the registrar that will hold the domain.</li>
+        <li>The legal name or company that should be the registrant.</li>
+        <li>A price you can fund through escrow this month, not a verbal maybe.</li>
+      </ul>
+      <h2>What you should refuse</h2>
+      <p>
+        Refuse any request to pay outside escrow, to “upgrade” the fee with a second wire, or to move the conversation to a new email that is not {SITE.email}.
+        The public price on this site is {SITE.priceLabel}. If a message quotes a different process, stop and write the seller again from the address on this page.
+      </p>
+      <p>
+        Pricing context is on the <a href="/valuation/">valuation guide</a>. To start, use <a href={MAIL.buy} data-cta="transfer_buy">buy now</a> or <a href={MAIL.contact} data-cta="transfer_contact">contact the seller</a>.
+      </p>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

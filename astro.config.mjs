@@ -6,6 +6,8 @@ export default defineConfig({
   site: 'https://tinkletrailers.com',
   output: 'static',
   trailingSlash: 'always',
+  compressHTML: true,
+  prefetch: true,
   integrations: [
     tailwind({
       applyBaseStyles: false,

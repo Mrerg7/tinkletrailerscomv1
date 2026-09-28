@@ -1,69 +1,38 @@
 ---
-import { ACQUISITION_MAILTO, SITE } from '../config/site';
+import Icon from './Icon.astro';
+import InquiryForm from './InquiryForm.astro';
+import { MAIL, SITE } from '../config/site';
 ---
 
-<section id="acquire" class="max-w-4xl mx-auto px-6 pb-20">
-  <div class="bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden">
-    <div class="px-8 md:px-12 pt-10 pb-8">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-y-4">
+<section class="section" id="acquire">
+  <div class="wrap acquire">
+    <div class="card">
+      <p class="kicker">Premium acquisition</p>
+      <p class="price-xl">{SITE.priceLabel}</p>
+      <p class="price-meta">USD · one-time · asking price through {SITE.priceValidUntil}</p>
+      <p class="sub" style="margin: 1rem 0 1.1rem;">
+        Only one registrant can hold TinkleTrailers.com. The asking price is public. Qualified offers are read in the order they arrive. This is not a countdown discount.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={MAIL.buy} data-cta="price_buy">Buy now</a>
+        <a class="btn btn-ghost" href={MAIL.offer} data-cta="price_offer">Make offer</a>
+        <a class="btn btn-ghost span-2" href={MAIL.contact} data-cta="price_contact"><Icon name="mail" /> Contact seller</a>
+      </div>
+      <div class="stack" style="margin-top: 1.3rem;">
         <div>
-          <div class="text-xs font-bold tracking-[2px] text-emerald-400 mb-1.5">PREMIUM ACQUISITION</div>
-          <div class="font-display text-6xl md:text-7xl tracking-[-3.5px] font-bold">$95,000</div>
-          <div class="text-zinc-400 mt-1">USD • One-time acquisition</div>
+          <p class="mini-title">Secure transfer</p>
+          <p>Close through <a href="https://www.escrow.com/" target="_blank" rel="noopener noreferrer">Escrow.com</a>, Dan.com, or your licensed escrow. See the <a href="/transfer/">transfer steps</a>.</p>
         </div>
-
-        <div class="md:text-right">
-          <div class="inline-flex items-center gap-x-2 text-sm bg-emerald-400/10 text-emerald-400 px-4 h-9 rounded-2xl font-medium">
-            <i class="fa-solid fa-shield-halved"></i>
-            <span>Escrow protected</span>
-          </div>
+        <div>
+          <p class="mini-title">Fast and private</p>
+          <p>Most transfers finish in 3–10 business days. The inquiry goes to {SITE.email} and is not posted on this site.</p>
         </div>
       </div>
     </div>
-
-    <div class="border-t border-white/10 px-8 md:px-12 py-8 bg-zinc-950/70">
-      <div class="grid md:grid-cols-3 gap-6 text-sm">
-        <div>
-          <div class="font-semibold mb-1.5 flex items-center gap-x-2">
-            <i class="fa-solid fa-handshake text-emerald-400"></i>
-            <span>Secure Transfer</span>
-          </div>
-          <div class="text-zinc-400">Handled via Escrow.com, Dan.com, or your preferred provider. Full support throughout the process.</div>
-        </div>
-        <div>
-          <div class="font-semibold mb-1.5 flex items-center gap-x-2">
-            <i class="fa-solid fa-clock text-emerald-400"></i>
-            <span>Fast &amp; Private</span>
-          </div>
-          <div class="text-zinc-400">Typical closing in 3–10 business days. Discreet transaction available for qualified buyers.</div>
-        </div>
-        <div>
-          <div class="font-semibold mb-1.5 flex items-center gap-x-2">
-            <i class="fa-solid fa-chart-line text-emerald-400"></i>
-            <span>Investment Grade</span>
-          </div>
-          <div class="text-zinc-400">Strong semantic value + explosive category growth = long-term digital equity appreciation.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="px-8 md:px-12 py-8 border-t border-white/10 flex flex-col sm:flex-row gap-4">
-      <a
-        href={ACQUISITION_MAILTO}
-        class="flex-1 inline-flex items-center justify-center gap-x-3 h-14 rounded-2xl bg-white text-zinc-950 font-semibold text-lg hover:bg-zinc-100 active:scale-[0.985] transition-all"
-      >
-        <span>Begin Acquisition</span>
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
-      <a
-        href={ACQUISITION_MAILTO}
-        class="flex-1 sm:flex-none inline-flex items-center justify-center gap-x-3 h-14 px-8 rounded-2xl border border-white/20 font-medium hover:bg-white/5 transition-all"
-      >
-        <i class="fa-solid fa-envelope"></i>
-        <span>Speak with Seller</span>
-      </a>
+    <div class="card">
+      <h2 style="font-size: 1.6rem; margin-bottom: 0.35rem;">Start the acquisition</h2>
+      <p class="price-meta" style="margin-bottom: 1rem;">Opens your email with the details filled in. Nothing is stored on this server.</p>
+      <InquiryForm id="acquire-form" source="acquire_form" />
     </div>
   </div>
-
-  <p class="text-center text-xs text-zinc-500 mt-5 tracking-wide">Serious inquiries only. This is a high-value strategic asset.</p>
 </section>

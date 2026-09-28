@@ -1,30 +1,28 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Nav from '../components/Nav.astro';
+import AcquisitionSection from '../components/AcquisitionSection.astro';
+import ClosingCTA from '../components/ClosingCTA.astro';
+import FaqSection from '../components/FaqSection.astro';
+import Footer from '../components/Footer.astro';
+import ForSection from '../components/ForSection.astro';
 import Hero from '../components/Hero.astro';
+import IndustrySection from '../components/IndustrySection.astro';
+import Nav from '../components/Nav.astro';
 import TrustBar from '../components/TrustBar.astro';
 import WhySection from '../components/WhySection.astro';
-import IndustrySection from '../components/IndustrySection.astro';
-import ForSection from '../components/ForSection.astro';
-import OpportunitySection from '../components/OpportunitySection.astro';
-import AcquisitionSection from '../components/AcquisitionSection.astro';
-import FaqSection from '../components/FaqSection.astro';
-import ClosingCTA from '../components/ClosingCTA.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout>
+<BaseLayout includeProduct>
   <Nav />
-  <main>
+  <main id="main">
     <Hero />
     <TrustBar />
     <WhySection />
     <IndustrySection />
     <ForSection />
-    <OpportunitySection />
     <AcquisitionSection />
     <FaqSection />
     <ClosingCTA />
-    <Footer />
   </main>
+  <Footer />
 </BaseLayout>

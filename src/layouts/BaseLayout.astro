@@ -1,70 +1,100 @@
 ---
 import '../styles/global.css';
-import { SITE, OG_IMAGE, ACQUISITION_MAILTO } from '../config/site';
+import { FAQS, OG_IMAGE, SITE } from '../config/site';
+import ExitIntent from '../components/ExitIntent.astro';
+import StickyCta from '../components/StickyCta.astro';
 
 interface Props {
   title?: string;
   description?: string;
-  ogImage?: string;
   robots?: string;
+  ogType?: string;
+  extraGraph?: Record<string, unknown>[];
+  includeProduct?: boolean;
+  showSticky?: boolean;
+  showExit?: boolean;
 }
 
 const {
   title = SITE.title,
   description = SITE.description,
-  ogImage = OG_IMAGE,
   robots = 'index, follow, max-image-preview:large',
+  ogType = 'website',
+  extraGraph = [],
+  includeProduct = false,
+  showSticky = true,
+  showExit = true,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, SITE.url);
-const publishedDate = '2026-06-08';
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
 
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'WebSite',
-      '@id': `${SITE.url}/#website`,
-      url: SITE.url,
-      name: SITE.name,
-      description,
-      inLanguage: 'en-US',
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'WebSite',
+    '@id': `${SITE.url}/#website`,
+    url: `${SITE.url}/`,
+    name: SITE.name,
+    description: SITE.description,
+    inLanguage: 'en-US',
+    publisher: { '@id': `${SITE.url}/#organization` },
+  },
+  {
+    '@type': 'Organization',
+    '@id': `${SITE.url}/#organization`,
+    name: SITE.name,
+    url: `${SITE.url}/`,
+    email: SITE.email,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Phoenix',
+      addressRegion: 'AZ',
+      addressCountry: 'US',
     },
-    {
-      '@type': 'WebPage',
-      '@id': `${SITE.url}/#webpage`,
-      url: SITE.url,
-      name: title,
-      description,
-      isPartOf: { '@id': `${SITE.url}/#website` },
-      datePublished: publishedDate,
-      dateModified: publishedDate,
-      inLanguage: 'en-US',
+  },
+  {
+    '@type': 'WebPage',
+    '@id': `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    datePublished: SITE.published,
+    dateModified: SITE.updated,
+    inLanguage: 'en-US',
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: OG_IMAGE,
+      width: 1200,
+      height: 630,
     },
+  },
+];
+
+if (includeProduct) {
+  graph.push(
     {
       '@type': 'Product',
       '@id': `${SITE.url}/#product`,
       name: 'TinkleTrailers.com Premium Domain Name',
+      sku: 'tinkletrailers.com',
       description:
-        'The definitive premium domain for mobile trailer solutions, portable restroom trailers, luxury mobile units, and event trailer businesses. Available for acquisition.',
+        'Premium .com domain for sale. The category name for mobile trailer, portable restroom trailer, and event logistics brands. One-time acquisition at the listed price.',
+      category: 'Premium domain name',
+      url: `${SITE.url}/`,
       image: {
         '@type': 'ImageObject',
         url: OG_IMAGE,
         width: 1200,
         height: 630,
       },
-      url: SITE.url,
-      category: 'Premium Domain Name',
-      brand: {
-        '@type': 'Brand',
-        name: 'Tinkle Trailers',
-      },
+      brand: { '@type': 'Brand', name: SITE.name },
       offers: {
         '@type': 'Offer',
-        url: ACQUISITION_MAILTO,
-        price: '95000',
+        url: `${SITE.url}/#acquire`,
+        price: SITE.price,
         priceCurrency: 'USD',
-        availability: 'https://schema.org/InStock',
+        priceValidUntil: SITE.priceValidUntil,
+        availability: 'https://schema.org/LimitedAvailability',
         seller: {
           '@type': 'Organization',
           name: SITE.name,
@@ -106,75 +136,68 @@ const structuredData = {
           merchantReturnDays: 0,
         },
       },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '5',
-        bestRating: '5',
-        ratingCount: 1,
-      },
-      review: {
-        '@type': 'Review',
-        author: {
-          '@type': 'Organization',
-          name: SITE.name,
-        },
-        reviewBody:
-          'A premium, memorable .com domain at the intersection of the mobile trailer and portable solutions industry — an unmatched foundation for a trailer rental, sales, or service venture.',
-      },
     },
     {
-      '@type': 'Organization',
-      '@id': `${SITE.url}/#organization`,
-      name: SITE.name,
-      url: SITE.url,
-      email: SITE.email,
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: 'Phoenix',
-        addressRegion: 'AZ',
-        addressCountry: 'US',
-      },
+      '@type': 'FAQPage',
+      '@id': `${SITE.url}/#faq`,
+      mainEntity: FAQS.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
     },
-  ],
-};
+  );
+}
+
+graph.push(...extraGraph);
+
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0c111c" />
     <meta name="generator" content={Astro.generator} />
     <meta name="google-site-verification" content={SITE.googleSiteVerification} />
-
+    <script is:inline>
+      try {
+        if (localStorage.getItem('tt-theme') === 'light') document.documentElement.classList.add('light');
+      } catch (e) {}
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
-    <link rel="canonical" href={canonicalURL} />
-
-    <meta property="og:type" content="website" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en-US" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />
-    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:secure_url" content={ogImage} />
+    <meta property="og:image" content={OG_IMAGE} />
+    <meta property="og:image:secure_url" content={OG_IMAGE} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="TinkleTrailers.com — Premium Domain for Mobile Trailer & Portable Solutions" />
+    <meta property="og:image:alt" content="TinkleTrailers.com premium domain for sale" />
     <meta property="og:locale" content={SITE.locale} />
-
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content="TinkleTrailers.com — Premium Domain for Mobile Trailer & Portable Solutions" />
-
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <meta name="twitter:image" content={OG_IMAGE} />
+    <meta name="twitter:image:alt" content="TinkleTrailers.com premium domain for sale" />
+    <script type="application/ld+json" set:html={jsonLd} />
   </head>
   <body>
+    <a class="skip" href="#main">Skip to content</a>
     <slot />
+    {showSticky && <StickyCta />}
+    {showExit && <ExitIntent />}
+    <script>
+      import '../scripts/ui.ts';
+    </script>
   </body>
 </html>

@@ -1,0 +1,15 @@
+---
+import Icon from './Icon.astro';
+import InquiryForm from './InquiryForm.astro';
+---
+
+<dialog class="exit" data-exit-dialog aria-labelledby="exit-title">
+  <div class="exit-top">
+    <p class="exit-title" id="exit-title">Leave an offer before you go</p>
+    <button class="icon-btn" type="button" data-exit-close aria-label="Close">
+      <Icon name="close" />
+    </button>
+  </div>
+  <p>TinkleTrailers.com has one owner. There is no coupon. If the number works for you, send it. The seller replies by email.</p>
+  <InquiryForm id="exit-form" compact source="exit_form" />
+</dialog>

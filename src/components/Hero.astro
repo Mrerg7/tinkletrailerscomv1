@@ -1,51 +1,50 @@
 ---
-import { ACQUISITION_MAILTO } from '../config/site';
+import Icon from './Icon.astro';
+import { MAIL, SITE } from '../config/site';
 ---
 
-<section class="pt-20 pb-16 md:pt-24 md:pb-20 border-b border-white/10 creative-grid">
-  <div class="max-w-5xl mx-auto px-6 text-center">
-    <div class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-3xl bg-white/5 border border-white/10 mb-6">
-      <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-      <span class="text-xs font-medium tracking-[1.5px] text-emerald-400">PREMIUM DOMAIN • STRATEGIC ACQUISITION</span>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="rise">
+      <p class="kicker"><span class="pulse" aria-hidden="true"></span> Premium .com for sale</p>
+      <h1 class="domain">TinkleTrailers<span class="domain-tld">.com</span></h1>
+      <p class="lede">The category name for mobile trailers, portable restroom trailers, and event logistics. One owner. Direct sale.</p>
+      <div class="price-block">
+        <p class="price">{SITE.priceLabel}</p>
+        <p class="price-meta">USD · one-time · available now · offers reviewed</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={MAIL.buy} data-cta="hero_buy">Buy now <Icon name="arrow" /></a>
+        <a class="btn btn-accent" href="#acquire" data-cta="hero_offer">Make offer</a>
+        <a class="btn btn-ghost span-2" href={MAIL.contact} data-cta="hero_contact">Contact seller</a>
+      </div>
+      <ul class="checks">
+        <li><Icon name="shield" /> Escrow protected</li>
+        <li><Icon name="lock" /> Direct from owner</li>
+        <li><Icon name="clock" /> Transfer in 3–10 days</li>
+      </ul>
     </div>
 
-    <h1 class="font-display text-[3.25rem] md:text-[4.75rem] leading-[0.95] tracking-[-0.055em] mb-4">
-      <span class="text-white">Tinkle</span><span class="trailer-text">Trailers</span><span class="text-white">.com</span>
-    </h1>
-
-    <p class="max-w-2xl mx-auto text-2xl md:text-3xl font-medium tracking-tight text-zinc-300 mb-8">
-      The definitive domain for<br class="hidden md:block" />mobile trailer &amp; portable solutions.
-    </p>
-
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-      <a
-        href={ACQUISITION_MAILTO}
-        class="group w-full sm:w-auto inline-flex items-center justify-center gap-x-3 px-9 py-4 text-lg font-semibold rounded-3xl bg-white text-zinc-950 hover:bg-zinc-100 active:scale-[0.985] transition-all shadow-xl shadow-black/20"
-      >
-        <span>Acquire for $95,000</span>
-        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-      </a>
-      <a
-        href="#why"
-        class="w-full sm:w-auto inline-flex items-center justify-center gap-x-2 px-8 py-4 text-lg font-medium rounded-3xl border border-white/20 hover:bg-white/5 transition-all"
-      >
-        <span>Explore the opportunity</span>
-      </a>
-    </div>
-
-    <div class="flex items-center justify-center gap-x-8 text-sm text-zinc-500">
-      <div class="flex items-center gap-x-2">
-        <i class="fa-solid fa-check text-emerald-400"></i>
-        <span>Instant brand recognition</span>
+    <figure class="mock rise" style="animation-delay: .08s">
+      <div class="mock-bar" aria-hidden="true">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <div class="url-pill">tinkletrailers.com</div>
       </div>
-      <div class="flex items-center gap-x-2">
-        <i class="fa-solid fa-check text-emerald-400"></i>
-        <span>Premium .com TLD</span>
+      <div class="mock-body">
+        <p class="mock-kicker">Brand preview</p>
+        <p class="mock-title">Restroom trailers, on the name people already say.</p>
+        <svg class="trailer" viewBox="0 0 360 92" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M28 62h250a14 14 0 0 0 14-14V36H48v26z" />
+          <path d="M48 36h34V22h168v14" />
+          <path d="M78 36v26M122 36v26M166 36v26M210 36v26" />
+          <circle cx="92" cy="70" r="10" />
+          <circle cx="246" cy="70" r="10" />
+          <path d="M292 50h28l12 12H292" />
+          <path d="M18 62h22" />
+        </svg>
+        <p>Weddings, jobsites, festivals, and relief — one brandable .com instead of a paragraph of explanation.</p>
+        <p class="mock-note">Illustration only. This listing sells the domain, not trailer rentals.</p>
       </div>
-      <div class="flex items-center gap-x-2">
-        <i class="fa-solid fa-check text-emerald-400"></i>
-        <span>Category-defining</span>
-      </div>
-    </div>
+    </figure>
   </div>
 </section>

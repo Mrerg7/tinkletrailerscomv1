@@ -1,23 +1,24 @@
 ---
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Page Not Found — Tinkle Trailers"
-  description="The page you are looking for could not be found."
-  robots="noindex"
+  title="Page not found | TinkleTrailers.com"
+  description="That page is not on the TinkleTrailers.com domain listing."
+  robots="noindex, follow"
+  showExit={false}
 >
-  <main class="min-h-screen flex items-center justify-center">
-    <div class="text-center px-6">
-      <h1 class="font-display text-8xl tracking-tighter mb-4">404</h1>
-      <p class="text-xl text-zinc-400 mb-8">The page you're looking for doesn't exist or has been moved.</p>
-      <a
-        href="/"
-        class="inline-flex items-center gap-x-2 px-6 py-3 bg-white text-zinc-950 font-medium rounded-2xl hover:bg-zinc-100 transition-all"
-      >
-        <i class="fa-solid fa-arrow-left"></i>
-        Back to Home
-      </a>
+  <Nav />
+  <main id="main" class="wrap page-hero" style="padding-bottom: 4rem;">
+    <p class="kicker">404</p>
+    <h1>This page is not on the listing.</h1>
+    <p class="lede" style="margin: 0.8rem 0 1.2rem;">The domain for sale is still TinkleTrailers.com. The address you tried is not.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/">Back to the domain</a>
+      <a class="btn btn-ghost" href="/#acquire">See the price</a>
     </div>
   </main>
+  <Footer />
 </BaseLayout>

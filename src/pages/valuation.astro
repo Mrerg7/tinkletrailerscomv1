@@ -1,0 +1,96 @@
+---
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
+import { MAIL, OG_IMAGE, SITE } from '../config/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Domain Valuation Guide | TinkleTrailers.com | Tinkle Trailers';
+const description =
+  'How the $95,000 asking price for TinkleTrailers.com was set: exact-match .com, 14 letters, no hyphen, and a commercial trailer category.';
+const url = `${SITE.url}/valuation/`;
+
+const extraGraph = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Valuation', item: url },
+    ],
+  },
+  {
+    '@type': 'Article',
+    '@id': `${url}#article`,
+    headline: 'How TinkleTrailers.com is priced',
+    description,
+    datePublished: SITE.updated,
+    dateModified: SITE.updated,
+    image: OG_IMAGE,
+    author: { '@id': `${SITE.url}/#organization` },
+    publisher: { '@id': `${SITE.url}/#organization` },
+    mainEntityOfPage: url,
+    inLanguage: 'en-US',
+  },
+];
+---
+
+<BaseLayout title={title} description={description} ogType="article" extraGraph={extraGraph}>
+  <Nav />
+  <Breadcrumb items={[{ name: 'Valuation', href: '/valuation/' }]} />
+  <main id="main" class="wrap page-hero">
+    <p class="kicker">Buyer guide</p>
+    <h1>How TinkleTrailers.com is priced.</h1>
+    <article class="prose" style="padding: 1.4rem 0 3rem;">
+      <p>
+        The asking price is <strong>{SITE.priceLabel} USD</strong>. That number is for the domain name only.
+        It is not a business valuation, a fleet appraisal, or a promise of what the name will earn after you own it.
+      </p>
+      <h2>What the name is</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Factor</th><th>TinkleTrailers.com</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Extension</td><td>.com</td></tr>
+            <tr><td>Second-level name</td><td>tinkletrailers — 14 letters</td></tr>
+            <tr><td>Hyphen or number</td><td>None</td></tr>
+            <tr><td>Commercial phrase</td><td>Exact: tinkle trailers</td></tr>
+            <tr><td>Asking price</td><td>{SITE.priceLabel}, offers reviewed</td></tr>
+            <tr><td>Closing</td><td>Licensed escrow, usually 3–10 business days</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2>Why exact-match .coms still clear a premium</h2>
+      <p>
+        Premium domain names get priced on language, not on a spreadsheet of last year’s revenue — because a domain for sale often has no revenue.
+        Buyers pay for four things: the extension people trust, a phrase customers already say, a string they can type once and remember, and a category that spends money to be found.
+      </p>
+      <p>
+        “Tinkle trailers” is not a coined startup word. It is descriptive. A portable restroom trailer company, a rental yard, or an event vendor can put it on a truck door and skip the explanation.
+        Newer TLDs can be cheaper. They also need a correction every time someone types .com out of habit.
+      </p>
+      <h2>What the price is not</h2>
+      <ul>
+        <li>It is not a domain marketplace auction with a hidden bidder list.</li>
+        <li>It is not an appraisal from a third-party broker. It is the owner’s asking price.</li>
+        <li>It does not include trailer inventory, phone numbers, or a built customer list.</li>
+        <li>Comparable aftermarket sales move around. Treat any “domains like this sold for X” claim you did not verify as marketing, including on other sites.</li>
+      </ul>
+      <h2>A practical way to test the number</h2>
+      <p>
+        If you already buy ads or leads for trailer rentals, compare one year of that spend with a one-time {SITE.priceLabel} acquisition.
+        Operators who will use the name as the company usually feel the price differently than investors who only want to resell it.
+        Investment-domain buyers should assume a hold period and no guarantee of a higher exit.
+      </p>
+      <p>
+        Offers below the ask are not ignored by default. Send the number, the intended use, and the registrar you will transfer into.
+        The <a href="/transfer/">transfer guide</a> explains why payment goes through escrow.
+      </p>
+      <p>
+        <a class="btn btn-primary" href={MAIL.offer} data-cta="valuation_offer">Make an offer</a>
+      </p>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

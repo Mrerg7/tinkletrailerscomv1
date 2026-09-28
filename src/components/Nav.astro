@@ -1,42 +1,52 @@
 ---
-import { ACQUISITION_MAILTO } from '../config/site';
+import Icon from './Icon.astro';
+import { MAIL } from '../config/site';
+
+const path = Astro.url.pathname;
+const links = [
+  { href: '/#why', label: 'Why this name' },
+  { href: '/#buyers', label: 'Buyers' },
+  { href: '/#acquire', label: 'Price' },
+  { href: '/valuation/', label: 'Valuation' },
+  { href: '/transfer/', label: 'Transfer' },
+];
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-zinc-950/80 backdrop-blur-lg" id="nav">
-  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-    <div class="flex items-center gap-x-3">
-      <a href="/" class="flex items-center gap-x-2">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 via-red-500 to-pink-500 flex items-center justify-center">
-          <span class="text-zinc-950 font-black text-2xl tracking-tighter">TT</span>
-        </div>
-        <div>
-          <span class="font-display text-2xl font-semibold tracking-tighter">Tinkle</span>
-          <span class="text-xs text-zinc-500 font-mono tracking-[3px] ml-0.5">Trailers</span>
-        </div>
-      </a>
-    </div>
-
-    <div class="hidden md:flex items-center gap-x-8 text-sm">
-      <a href="#why" class="hover:text-white transition-colors text-zinc-400">Why This Domain</a>
-      <a href="#industry" class="hover:text-white transition-colors text-zinc-400">The Industry</a>
-      <a href="#for" class="hover:text-white transition-colors text-zinc-400">Perfect For</a>
-      <a href="#acquire" class="hover:text-white transition-colors text-zinc-400">Acquire</a>
-    </div>
-
-    <div class="flex items-center gap-x-4">
-      <a
-        href="#acquire"
-        class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold rounded-2xl bg-white text-zinc-950 hover:bg-zinc-100 transition-all active:scale-[0.985]"
-      >
-        Acquire Now
-      </a>
-      <a
-        href={ACQUISITION_MAILTO}
-        class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium rounded-2xl border border-white/20 hover:bg-white/5 transition-all"
-      >
-        <i class="fa-solid fa-envelope mr-2"></i>
-        <span class="hidden sm:inline">Inquire</span>
-      </a>
+<header class="site-header">
+  <div class="wrap nav-bar">
+    <a class="brand" href="/" aria-label="Tinkle Trailers home">
+      <span class="mark">TT</span>
+      <span class="brand-name">Tinkle<span>Trailers</span></span>
+    </a>
+    <nav class="desktop-nav" aria-label="Primary">
+      {
+        links.map((link) => (
+          <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to light mode">
+        <span class="when-dark"><Icon name="sun" /></span>
+        <span class="when-light"><Icon name="moon" /></span>
+      </button>
+      <a class="btn btn-primary nav-buy" href={MAIL.buy} data-cta="nav_buy">Buy now</a>
+      <button class="icon-btn menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu">
+        <span class="sr-only">Open menu</span>
+        <Icon name="menu" />
+      </button>
     </div>
   </div>
-</nav>
+  <div class="wrap mobile-panel" id="mobile-menu" data-menu-panel hidden>
+    <nav aria-label="Mobile">
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+    </nav>
+    <div class="cta-row">
+      <a class="btn btn-primary" href={MAIL.buy} data-cta="menu_buy">Buy now</a>
+      <a class="btn btn-ghost" href={MAIL.offer} data-cta="menu_offer">Make offer</a>
+      <a class="btn btn-ghost span-2" href={MAIL.contact} data-cta="menu_contact">Contact seller</a>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,65 @@
+---
+import { SITE } from '../config/site';
+
+interface Props {
+  id: string;
+  compact?: boolean;
+  source: string;
+}
+const { id, compact = false, source } = Astro.props;
+---
+
+<form class:list={['form-grid', !compact && 'two']} data-inquiry-form={source} id={id} novalidate>
+  <label class="field">
+    <span>Name</span>
+    <input name="name" autocomplete="name" required maxlength="80" />
+  </label>
+  <label class="field">
+    <span>Email</span>
+    <input name="email" type="email" autocomplete="email" inputmode="email" required maxlength="120" />
+  </label>
+  {!compact && (
+    <label class="field">
+      <span>Company</span>
+      <input name="company" autocomplete="organization" maxlength="120" />
+    </label>
+  )}
+  <label class="field">
+    <span>Intent</span>
+    <select name="intent">
+      <option value="offer">Make an offer</option>
+      <option value="buy">Buy now at {SITE.priceLabel}</option>
+      <option value="question">Ask a question</option>
+    </select>
+  </label>
+  <label class="field">
+    <span>Offer in USD <span class="sr-only">(optional)</span></span>
+    <input name="offer" inputmode="numeric" placeholder="95000" maxlength="12" />
+  </label>
+  {!compact && (
+    <label class="field">
+      <span>Intended use</span>
+      <select name="use">
+        <option value="">Select</option>
+        <option>Portable restroom trailers</option>
+        <option>Trailer rentals</option>
+        <option>Events and weddings</option>
+        <option>Jobsite services</option>
+        <option>Manufacturing or dealership</option>
+        <option>Mobile hospitality</option>
+        <option>Investment hold</option>
+      </select>
+    </label>
+  )}
+  {!compact && (
+    <label class="field span-2">
+      <span>Note</span>
+      <textarea name="note" maxlength="1000" placeholder="Timing, registrar, or questions."></textarea>
+    </label>
+  )}
+  <p class="span-2" data-form-error hidden role="alert"></p>
+  <p class="span-2" data-form-ok hidden>If your email app did not open, write {SITE.email} with the same details.</p>
+  <div class="span-2">
+    <button class="btn btn-accent" type="submit">Send inquiry</button>
+  </div>
+</form>
