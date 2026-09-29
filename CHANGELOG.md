@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-09-29 — fix Product snippets GSC warnings (review / aggregateRating)
+
+- Removed the `@type: Product` JSON-LD node from `BaseLayout` entirely. A domain
+  name for sale has no genuine third-party product reviews, and Google Search
+  Console flags every Product node without `review` / `aggregateRating` as a
+  non-critical issue. Adding self-authored reviews to silence the warning would
+  violate Google's spam policies (reviews must be visible on the page and not
+  self-serving), so the compliant fix is to stop emitting Product markup.
+- Renamed the `includeProduct` layout prop to `includeFaq` (homepage only); it now
+  controls just the FAQPage node, which matches the visible FAQ section.
+- Kept WebSite, Organization, WebPage, FAQPage (home), Article + Breadcrumb
+  (valuation), HowTo + Breadcrumb (transfer). Visible price / escrow / contact
+  copy is unchanged.
+- Expected result: the Product snippets report in Search Console goes empty and
+  the two "Missing field" warnings resolve after recrawl (validate with Rich
+  Results Test; no Product item should be detected).
+
 ## 2026-09-28 — logo
 
 - Replaced the line-drawn trailer in the brand preview with the Tinkle Trailers.com pencil mark (`public/tinkle-mark.jpg`).

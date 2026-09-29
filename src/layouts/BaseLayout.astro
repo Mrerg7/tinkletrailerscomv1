@@ -10,7 +10,7 @@ interface Props {
   robots?: string;
   ogType?: string;
   extraGraph?: Record<string, unknown>[];
-  includeProduct?: boolean;
+  includeFaq?: boolean;
   showSticky?: boolean;
   showExit?: boolean;
 }
@@ -21,7 +21,7 @@ const {
   robots = 'index, follow, max-image-preview:large',
   ogType = 'website',
   extraGraph = [],
-  includeProduct = false,
+  includeFaq = false,
   showSticky = true,
   showExit = true,
 } = Astro.props;
@@ -70,83 +70,22 @@ const graph: Record<string, unknown>[] = [
   },
 ];
 
-if (includeProduct) {
-  graph.push(
-    {
-      '@type': 'Product',
-      '@id': `${SITE.url}/#product`,
-      name: 'TinkleTrailers.com Premium Domain Name',
-      sku: 'tinkletrailers.com',
-      description:
-        'Premium .com domain for sale. The category name for mobile trailer, portable restroom trailer, and event logistics brands. One-time acquisition at the listed price.',
-      category: 'Premium domain name',
-      url: `${SITE.url}/`,
-      image: {
-        '@type': 'ImageObject',
-        url: OG_IMAGE,
-        width: 1200,
-        height: 630,
-      },
-      brand: { '@type': 'Brand', name: SITE.name },
-      offers: {
-        '@type': 'Offer',
-        url: `${SITE.url}/#acquire`,
-        price: SITE.price,
-        priceCurrency: 'USD',
-        priceValidUntil: SITE.priceValidUntil,
-        availability: 'https://schema.org/LimitedAvailability',
-        seller: {
-          '@type': 'Organization',
-          name: SITE.name,
-          email: SITE.email,
-        },
-        shippingDetails: {
-          '@type': 'OfferShippingDetails',
-          shippingRate: {
-            '@type': 'MonetaryAmount',
-            value: '0.00',
-            currency: 'USD',
-          },
-          deliveryTime: {
-            '@type': 'ShippingDeliveryTime',
-            handlingTime: {
-              '@type': 'QuantitativeValue',
-              minValue: 0,
-              maxValue: 1,
-              unitCode: 'DAY',
-            },
-            transitTime: {
-              '@type': 'QuantitativeValue',
-              minValue: 0,
-              maxValue: 0,
-              unitCode: 'DAY',
-            },
-          },
-          shippingDestination: {
-            '@type': 'DefinedRegion',
-            addressCountry: 'US',
-          },
-        },
-        hasMerchantReturnPolicy: {
-          '@type': 'MerchantReturnPolicy',
-          returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-          returnMethod: 'https://schema.org/ReturnByMail',
-          returnFees: 'https://schema.org/FreeReturn',
-          applicableCountry: 'US',
-          merchantReturnDays: 0,
-        },
-      },
-    },
-    {
-      '@type': 'FAQPage',
-      '@id': `${SITE.url}/#faq`,
-      mainEntity: FAQS.map((item) => ({
-        '@type': 'Question',
-        name: item.q,
-        acceptedAnswer: { '@type': 'Answer', text: item.a },
-      })),
-    },
-  );
+if (includeFaq) {
+  // NOTE: Product markup intentionally omitted. A domain name for sale has no
+  // genuine third-party product reviews to mark up, and Google flags missing
+  // review/aggregateRating on Product nodes in Search Console. Inventing
+  // self-serving reviews would violate Google's spam policies, so we do not
+  // emit @type Product at all. Visible offer details (price, escrow, contact)
+  // remain in the page copy. FAQ markup below matches the visible FAQ section.
+  graph.push({
+    '@type': 'FAQPage',
+    '@id': `${SITE.url}/#faq`,
+    mainEntity: FAQS.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  });
 }
 
 graph.push(...extraGraph);
